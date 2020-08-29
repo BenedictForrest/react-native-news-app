@@ -23,11 +23,15 @@ export default function App() {
             data={articles}
             keyExtractor={(item, index: number) => index.toString()}
             renderItem={({ item, index }) => (
-                <View>
-                    <Text>{item.title}</Text>
-                    <Text>{item.author}</Text>
-                    <Text>{item.description}</Text>
+                <View style={styles.article}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.author}>{item.author}</Text>
+                    <Text style={styles.description}>{item.description}</Text>
                 </View>
+            )}
+            style={styles.container}
+            ItemSeparatorComponent={() => (
+                <View style={styles.divider} />
             )}
         />
     )
@@ -35,9 +39,31 @@ export default function App() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexBasis: 0,
+        flexGrow: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
+    article: {
+        padding: 24,
+    },
+    title: {
+        color: '#000',
+        fontSize: 20,
+        fontWeight: '700',
+        marginBottom: 8,
+    },
+    author: {
+        color: '#666',
+        fontSize: 12,
+        marginBottom: 8,
+    },
+    description: {
+        color: '#333',
+        fontSize: 16,
+        lineHeight: 22,
+    },
+    divider: {
+        backgroundColor: '#EEE',
+        height: 1,
+    }
 })
