@@ -7,7 +7,7 @@ export default function App() {
 
     // Fetch the articles from NewsAPI
     const fetchMovies = () => {
-        fetch(`http://newsapi.org/v2/top-headlines?country=au&apiKey=96e7efbae84544aca2e40f5834bf2777`)
+        fetch(`https://cors-anywhere.herokuapp.com/http://newsapi.org/v2/top-headlines?country=au&apiKey=96e7efbae84544aca2e40f5834bf2777`)
           .then((response) => response.json())
           .then((json) => setArticles(json.articles))
           .catch((error) => console.log(error))
