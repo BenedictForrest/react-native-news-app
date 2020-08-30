@@ -4,20 +4,13 @@ import { FlatList, Linking, StyleSheet, TouchableOpacity, Text, View } from 'rea
 export default function NewsFeed() {
     // Articles state
     const [articles, setArticles] = useState([])
-    const [error, setError] = useState('no error')
 
     // Fetch the articles from NewsAPI
     const fetchMovies = () => {
         fetch(`http://newsapi.org/v2/top-headlines?country=au&apiKey=96e7efbae84544aca2e40f5834bf2777`)
           .then((response) => response.json())
-          .then((json) => {
-              setArticles(json.articles)
-              setError(json.totalResults)
-          })
-          .catch((error) => {
-              console.log(error)
-              alert(error)
-          })
+          .then((json) => setArticles(json.articles))
+          .catch((error) => console.log(error))
     }
 
     // run fetchMovies on inital render
