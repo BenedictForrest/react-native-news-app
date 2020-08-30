@@ -25,7 +25,7 @@ export default function App() {
             renderItem={({ item, index }) => (
                 <View style={styles.article}>
                     <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.author}>{item.author}</Text>
+                    <Text style={styles.author}>{item.author ? item.author : item.source.name}</Text>
                     <Text style={styles.description}>{item.description}</Text>
                 </View>
             )}
