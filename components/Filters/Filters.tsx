@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import { ScrollView, Text, TouchableOpacity, View} from 'react-native'
 import { FiltersContext } from '../ContextProvider/ContextProvider'
+import { getFiltersCSS } from './Filters.styles'
 
 export default function Filters() {
     // Fetch context
@@ -22,7 +23,7 @@ export default function Filters() {
         fetchSources()
     }, [])
 
-    // Update selectedSource
+    // Update selectedSources
     const onPress = (id: string) => {
         const itemIndex = selectedSources.indexOf(id)
         const newSelectedSources = [...selectedSources]
@@ -35,18 +36,28 @@ export default function Filters() {
             setSelectedSources(newSelectedSources)
         }
     }
+
+    // Styles
+    const {
+        bodyCSS,
+        titleCSS,
+        labelCSS,
+        rowCSS,
+        checkboxCSS,
+        tickCSS,
+    } = getFiltersCSS()
     
     return (
-        <ScrollView style={styles.body}>
+        <ScrollView style={bodyCSS}>
             <View>
-                <Text style={styles.title}>SOURCES</Text>
+                <Text style={titleCSS}>SOURCES</Text>
                 {sources.map((source, index) => {
                     return (
-                        <TouchableOpacity style={styles.row} key={index} onPress={() => onPress(source.id)}>
-                            <View style={styles.checkbox}>
-                                {selectedSources.indexOf(source.id) > -1 && <Text style={styles.tick}>✓</Text>}
+                        <TouchableOpacity style={rowCSS} key={index} onPress={() => onPress(source.id)}>
+                            <View style={checkboxCSS}>
+                                {selectedSources.indexOf(source.id) > -1 && <Text style={tickCSS}>✓</Text>}
                             </View>
-                            <Text style={styles.label}>{source.name}</Text>
+                            <Text style={labelCSS}>{source.name}</Text>
                         </TouchableOpacity>
                     )
                 })}
@@ -54,40 +65,3 @@ export default function Filters() {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    body: {
-        backgroundColor: '#FFF',
-        flexBasis: 0,
-        flexGrow: 1,
-        padding: 24,
-    },
-    title: {
-        color: '#999',
-        fontSize: 14,
-        fontWeight: '700',
-    },
-    label: {
-        color: '#333',
-        fontSize: 16,
-    },
-    row: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        marginTop: 8,
-    },
-    checkbox: {
-        alignItems: 'center',
-        backgroundColor: '#EEE',
-        borderRadius: 3,
-        height: 14,
-        justifyContent: 'center',
-        marginRight: 8,
-        width: 14,
-    },
-    tick: {
-        color: '#666',
-        fontSize: 10,
-        fontWeight: '700',
-    }
-})
