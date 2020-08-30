@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Linking, StyleSheet, TouchableOpacity, Text, View } from 'react-native'
 
 export default function App() {
     // Articles state
@@ -23,11 +23,13 @@ export default function App() {
             data={articles}
             keyExtractor={(item, index: number) => index.toString()}
             renderItem={({ item, index }) => (
-                <View style={styles.article}>
-                    <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.author}>{item.author ? item.author : item.source.name}</Text>
-                    <Text style={styles.description}>{item.description ? item.description : `Preview content is not available for this article. Read the full article on ${item.source.name}.`}</Text>
-                </View>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => Linking.openURL(item.url)}>
+                    <View style={styles.article}>
+                        <Text style={styles.title}>{item.title}</Text>
+                        <Text style={styles.author}>{item.author ? item.author : item.source.name}</Text>
+                        <Text style={styles.description}>{item.description ? item.description : `Preview content is not available for this article. Read the full article on ${item.source.name}.`}</Text>
+                    </View>
+                </TouchableOpacity>
             )}
             style={styles.container}
             ItemSeparatorComponent={() => (
