@@ -26,7 +26,7 @@ export default function App() {
                 <View style={styles.article}>
                     <Text style={styles.title}>{item.title}</Text>
                     <Text style={styles.author}>{item.author ? item.author : item.source.name}</Text>
-                    <Text style={styles.description}>{item.description}</Text>
+                    <Text style={styles.description}>{item.description ? item.description : `Preview content is not available for this article. Read the full article on ${item.source.name}.`}</Text>
                 </View>
             )}
             style={styles.container}
