@@ -1,22 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FlatList, Linking, StyleSheet, TouchableOpacity, Text, View } from 'react-native'
+import { FiltersContext } from '../ContextProvider/ContextProvider'
 
 export default function NewsFeed() {
+    // Fetch context
+    const {selectedSources} = useContext(FiltersContext)
+
+    let selectedSourcesString = selectedSources.length > 0 ? 'sources=' : 'country=au'
+    selectedSources.forEach((id, index) => {
+        if (index > 0) {
+            selectedSourcesString =  `${selectedSourcesString}, `
+        }
+        selectedSourcesString = `${selectedSourcesString}${id}`
+    })
+
+    console.log(selectedSourcesString)
+
     // Articles state
     const [articles, setArticles] = useState([])
+    const [status, setStatus] = useState('')
 
     // Fetch the articles from NewsAPI
     const fetchMovies = () => {
-        fetch(`http://newsapi.org/v2/top-headlines?country=au&apiKey=96e7efbae84544aca2e40f5834bf2777`)
+        fetch(`http://newsapi.org/v2/top-headlines?${selectedSourcesString}&apiKey=96e7efbae84544aca2e40f5834bf2777`)
           .then((response) => response.json())
-          .then((json) => setArticles(json.articles))
+          .then((json) => {
+              setArticles(json.articles)
+              setStatus(json.message)
+          })
           .catch((error) => console.log(error))
     }
 
     // run fetchMovies on inital render
     useEffect(() => {
         fetchMovies()
-    }, [])
+    }, [selectedSourcesString])
 
     return (
         <FlatList
@@ -41,7 +59,7 @@ export default function NewsFeed() {
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FFF',
         flexBasis: 0,
         flexGrow: 1,
     },
